@@ -1,12 +1,12 @@
 package me.namila.haulmatic.response;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 
 
-public class ResponseWrapper<T> extends ResponseEntity<T>
-{
-    public ResponseWrapper( T t, HttpStatus status ) throws Exception {
-        super( ( T ) new Resultset<>( t, status ), status );
+public class ResponseWrapper<T> {
+    public Resultset<T> body;
+
+    public ResponseWrapper(T t, HttpStatus status) throws Exception {
+        this.body = new Resultset<>(t, status);
     }
 }

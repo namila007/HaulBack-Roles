@@ -10,8 +10,8 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
-@EnableMongoAuditing
 @EnableSwagger2
+@EnableMongoAuditing
 public class HaulmaticApplication {
 
 	public static void main(String[] args) {

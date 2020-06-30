@@ -1,43 +1,54 @@
 package me.namila.haulmatic.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import me.namila.haulmatic.constants.enums.RoleType;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.data.mongodb.core.index.IndexDirection;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
-import java.util.UUID;
+
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ApiModel(description = "Role Object")
+@Document(collection = "role")
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Role {
-    @Id
-    @ApiModelProperty(accessMode = ApiModelProperty.AccessMode.READ_ONLY, notes = "ID of the Object", position = 0)
-    private UUID id = UUID.randomUUID();
 
-    @ApiModelProperty(example = "Harry", notes = "Role's first name", required = true , position = 1)
+    @ApiModelProperty(notes = "ID of the Object", position = 0, readOnly = true)
+    @Id
+    private String id;
+
+    @ApiModelProperty(example = "Harry", notes = "Role's first name", required = true, position = 1)
     private String firstName;
 
-    @ApiModelProperty(example = "Potter", value = "Role's Last name", required = true , position = 2)
+    @ApiModelProperty(example = "Potter", value = "Role's Last name", required = true, position = 2)
     private String lastName;
 
-    @ApiModelProperty(example = "Hogwarts", value = "Role's Organization", required = true , position = 3)
+    @ApiModelProperty(example = "Hogwarts", value = "Role's Organization", required = true, position = 3)
     private String organization;
 
-    @ApiModelProperty(example = "2636437372v", value = "Role's NIC number", required = true , position = 4)
+    @ApiModelProperty(example = "2636437372v", value = "Role's NIC number", required = true, position = 4)
+    @Indexed(name = "nic_index", unique = true, direction = IndexDirection.ASCENDING)
     private String nic;
 
-    @ApiModelProperty(accessMode = ApiModelProperty.AccessMode.READ_ONLY, value = "Role Created Date and Time", position = 6)
+    @ApiModelProperty(value = "Role Created Date and Time", position = 6, readOnly = true)
     @CreatedDate
     private Date createdDate;
 
-    @ApiModelProperty(accessMode = ApiModelProperty.AccessMode.READ_ONLY, value = "Role's Last Modified Date and Time ", position = 7)
+    @ApiModelProperty(value = "Role's Last Modified Date and Time ", position = 7, readOnly = true)
     @LastModifiedDate
     private Date lastModifiedDate;
 
@@ -46,8 +57,8 @@ public class Role {
 
     @Override
     public String toString() {
-        return String.format("Role[id=%s, firstName='%s', lastName='%s', organization='%s', nic='%s', roleType='%s', createdAt='%s'" +
-                "updatedAt='%s']",id,firstName,lastName,organization,nic,roleType,createdDate,lastModifiedDate);
+        return String.format("Role[id=%s, firstName='%s', lastName='%s', organization='%s', nic='%s', roleType='%s', createdDate='%s'" +
+                "updatedAt='%s']", id, firstName, lastName, organization, nic, roleType, createdDate, lastModifiedDate);
     }
 
 }
