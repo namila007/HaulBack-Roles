@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import me.namila.haulmatic.constants.enums.RoleType;
 import me.namila.haulmatic.exceptionHandler.exceptions.ResourceNotFoundException;
+import me.namila.haulmatic.exceptionHandler.exceptions.ValidationException;
 import me.namila.haulmatic.models.Role;
 import me.namila.haulmatic.models.RoleSearch;
 import me.namila.haulmatic.respositories.RoleRepository;
@@ -17,6 +18,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import static me.namila.haulmatic.constants.statics.Common.NIC_DIGIT_COUNT;
+
 @Service
 @NoArgsConstructor
 @AllArgsConstructor
@@ -26,6 +29,11 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public Role addRole(Role role) {
+        if (role.getFirstName().isEmpty() || role.getLastName().isEmpty() || role.getOrganization().isEmpty() || role.getRoleType().toString().isEmpty()) {
+            throw new ValidationException("PLEASE CHECK YOUR INPUTS");
+        }
+        if (role.getNic().isEmpty() || role.getNic().length() != NIC_DIGIT_COUNT)
+            throw new ValidationException("NIC SHOULD CONTAIN " + NIC_DIGIT_COUNT + " CHARACTERS");
         return roleRepository.save(role);
     }
 

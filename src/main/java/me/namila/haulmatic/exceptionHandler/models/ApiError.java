@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 
 import java.time.LocalDateTime;
 
-import static me.namila.haulmatic.constants.statics.GlobalStatics.DATE_PATTERN;
+import static me.namila.haulmatic.constants.statics.Common.DATE_PATTERN;
 
 @Data
 @AllArgsConstructor
