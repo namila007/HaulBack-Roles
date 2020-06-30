@@ -1,5 +1,6 @@
 package me.namila.haulmatic.services;
 
+import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import me.namila.haulmatic.constants.enums.RoleType;
 import me.namila.haulmatic.exceptionHandler.exceptions.ResourceNotFoundException;
@@ -18,9 +19,9 @@ import java.util.Optional;
 
 @Service
 @NoArgsConstructor
+@AllArgsConstructor
 public class RoleServiceImpl implements RoleService {
 
-    @Autowired
     private RoleRepository roleRepository;
 
     @Override
@@ -98,5 +99,10 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public Page<Role> getAllRole(Pageable pageable) {
         return roleRepository.findAll(pageable);
+    }
+
+    @Autowired
+    public void setRoleRepository(RoleRepository roleRepository) {
+        this.roleRepository = roleRepository;
     }
 }

@@ -5,6 +5,8 @@ public class ApiEndPoints {
     public static final String API_VERSION = "/v1";
     public static final String BASE_END_POINT = BASE_URL + API_VERSION;
 
+    public static final String STATUS_END_POINT = "/status";
+
     public static final String ROLE_END_POINT = "/role";
     public static final String ID_VARIABLE = "/{id}";
     public static final String NIC_END_POINT = "/nic";
